@@ -33,9 +33,7 @@ class Image(models.Model):
                                              null=False,
                                              db_index=True
                                              )
-    img_file = models.ImageField(verbose_name='Изображение',
-                                 #upload_to="media/"
-                                 )
+    img_file = models.ImageField(verbose_name='Изображение')
 
     class Meta:
         ordering = ['index']
