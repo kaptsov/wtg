@@ -2,8 +2,8 @@
 
 ### Общая информация
 
-Проект доступен по ссылке: http://kaptsovalexander.pythonanywhere.com/  
-Панель администратора: http://kaptsovalexander.pythonanywhere.com/admin
+Проект доступен по ссылке: http://u1741564.isp.regruhosting.ru/  
+Панель администратора: http://u1741564.isp.regruhosting.ru//admin
 
 Это код первого урока в курсе по Python и веб-разработке на сайте [Devman](https://dvmn.org)
 
@@ -74,8 +74,7 @@
 
 ### Создание/редактирование локации в админ-панели
 
-Перейдите в админ-панель по адресу: https://alexanderkaptsov.pythonanywhere.com/admin или http://127.0.0.1:8000/admin/ и введите
-логин и пароль.
+Перейдите в админ-панель по адресу: http://127.0.0.1:8000/admin/ и введите логин и пароль.
 
 Для создания локации нажмите кнопку ```Add``` в панели слева:
 
