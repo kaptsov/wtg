@@ -1,5 +1,6 @@
-from urllib.parse import urlsplit
+import os
 from io import BytesIO
+from urllib.parse import urlsplit
 
 import requests
 from django.core.files.images import ImageFile
@@ -14,15 +15,11 @@ class Command(BaseCommand):
     def add_arguments(self, parser: CommandParser):
         parser.add_argument('url')
 
-    def handle(self, *args, **options):
+
+    def fill_data_from_link(self):
         response = requests.get(options['url'])
-
         response.raise_for_status()
-
         place_data = response.json()
-
-        # Check for JSON validity
-
         title = place_data.get('title')
         if not title:
             raise CommandError('JSON data has no "title" property')
@@ -98,3 +95,13 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f'Place "{title}" is loaded completely! :D'))
 
 
+    def handle(self, *args, **options):
+        source = str(kwargs['source'])
+        if os.path.isfile(source):
+            with open(source, 'r') as file:
+                list_of_links = file.readlines()
+            for link in list_of_links:
+                self.fill_data_from_link(link)
+
+        else:
+            self.fill_data_from_link(source)
