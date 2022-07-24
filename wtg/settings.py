@@ -66,8 +66,11 @@ WSGI_APPLICATION = 'wtg.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST': 'localhost',
     }
 }
 
@@ -106,6 +109,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media/'
+#
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
