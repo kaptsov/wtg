@@ -39,7 +39,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'where_to_go.urls'
+ROOT_URLCONF = 'wtg.urls'
 
 TEMPLATES = [
     {
@@ -58,7 +58,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'where_to_go.wsgi.application'
+WSGI_APPLICATION = 'wtg.wsgi.application'
 
 
 # Database
@@ -104,5 +104,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media/'
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
