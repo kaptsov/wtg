@@ -10,6 +10,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('places/<int:place_id>/', views.place_view, name='place_view'),
     path('tinymce/', include('tinymce.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
+
+
+
+
 
 
