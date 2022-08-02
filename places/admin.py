@@ -11,19 +11,18 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
 
     fields = [
         'img_file',
-        'headshot_image',
+        'image_preview',
         'index'
     ]
 
-    readonly_fields = ['headshot_image', ]
+    readonly_fields = ['image_preview', ]
 
-    def headshot_image(self, obj):
+    def image_preview(self, obj):
         headshot_height = 200
         return format_html('<img src="{url}" height={height} />'.format(
-            url = obj.img_file.url,
-            height=headshot_height,
-            )
-    )
+                           url=obj.img_file.url,
+                           height=headshot_height)
+                           )
 
 
 @admin.register(Place)
