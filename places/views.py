@@ -6,7 +6,8 @@ from .models import Place
 
 
 def index(request):
-    places = {
+
+    places_GeoJson = {
         'type': 'FeatureCollection',
         'features': []
     }
@@ -25,10 +26,9 @@ def index(request):
                                       )
             }
         }
-        places['features'].append(place_feature)
+        places_GeoJson['features'].append(place_feature)
 
-    data = {'places': places}
-    return render(request, 'index.html', context=data)
+    return render(request, 'index.html', {'places': places_GeoJson})
 
 
 def place_view(request, place_id):
