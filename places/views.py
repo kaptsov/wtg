@@ -10,7 +10,7 @@ def index(request):
         'type': 'FeatureCollection',
         'features': []
     }
-    for place in Place.objects.all().iterator():
+    for place in Place.objects.all():
         place_feature = {
             'type': 'Feature',
             'geometry': {
@@ -20,11 +20,12 @@ def index(request):
             'properties': {
                 'title': place.title,
                 'placeId': place.id,
-                'detailsUrl': reverse('place_view', kwargs={'place_id':place.id})
+                'detailsUrl': reverse('place_view',
+                                      kwargs={'place_id': place.id}
+                                      )
             }
         }
         places['features'].append(place_feature)
-
 
     data = {'places': places}
     return render(request, 'index.html', context=data)
@@ -47,5 +48,5 @@ def place_view(request, place_id):
     return JsonResponse(
         data=place_serialized,
         safe=False,
-        json_dumps_params={'ensure_ascii': False, 'indent':2}
+        json_dumps_params={'ensure_ascii': False}
     )
