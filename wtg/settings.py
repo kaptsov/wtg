@@ -1,21 +1,22 @@
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
+from environs import Env
 
-load_dotenv()
+env = Env()
+env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = os.environ['DEBUG']
+DEBUG = env.bool('DEBUG', False)
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(' ')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', [])
 
-CSRF_COOKIE_SECURE = os.environ['CSRF_COOKIE_SECURE']
+CSRF_COOKIE_SECURE = env.bool('CSRF_COOKIE_SECURE', True)
 
-SESSION_COOKIE_SECURE = os.environ['SESSION_COOKIE_SECURE']
+SESSION_COOKIE_SECURE = env.bool('SESSION_COOKIE_SECURE', True)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -67,9 +68,9 @@ WSGI_APPLICATION = 'wtg.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ['DB_NAME'],
-        'USER': os.environ['DB_USER'],
-        'PASSWORD': os.environ['DB_PASSWORD'],
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
         'HOST': 'localhost',
     }
 }
