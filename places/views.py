@@ -35,7 +35,7 @@ def place_view(request, place_id):
 
     place = get_object_or_404(Place, id=place_id)
 
-    place_serialized = {
+    serialized_place = {
         "title": place.title,
         "imgs": [image.img_file.url for image in place.images.all()],
         "description_short": place.description_short,
@@ -46,7 +46,7 @@ def place_view(request, place_id):
         }
     }
     return JsonResponse(
-        data=place_serialized,
+        data=serialized_place,
         safe=False,
         json_dumps_params={'ensure_ascii': False}
     )
