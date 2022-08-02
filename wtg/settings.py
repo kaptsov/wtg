@@ -95,7 +95,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-MEDIA_ROOT = 'media/'
+MEDIA_ROOT = env('MEDIA_ROOT', BASE_DIR / 'media')
 MEDIA_URL = '/media/'
 
 STATIC_ROOT = env('STATIC_ROOT', 'staticfiles')
