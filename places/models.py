@@ -30,7 +30,6 @@ class Image(models.Model):
                               verbose_name='Место')
     index = models.PositiveIntegerField(verbose_name='Порядковый номер',
                                         default=0,
-                                        db_index=True
                                         )
     img_file = models.ImageField(verbose_name='Изображение')
 
