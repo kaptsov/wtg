@@ -6,29 +6,29 @@ from .models import Place
 
 
 def index(request):
+    place_features = [serialize_place(place) for place in Place.objects.all()]
 
-    places_GeoJson = {
+    places_geodata = {
         'type': 'FeatureCollection',
-        'features': []
+        'features': place_features,
     }
-    for place in Place.objects.all():
-        place_feature = {
-            'type': 'Feature',
-            'geometry': {
-                'type': 'Point',
-                'coordinates': [place.lng, place.lat]
-            },
-            'properties': {
-                'title': place.title,
-                'placeId': place.id,
-                'detailsUrl': reverse('place_view',
-                                      kwargs={'place_id': place.id}
-                                      )
-            }
-        }
-        places_GeoJson['features'].append(place_feature)
 
-    return render(request, 'index.html', {'places': places_GeoJson})
+    return render(request, 'index.html', {'places': places_geodata})
+
+
+def serialize_place(place):
+    return {
+        'type': 'Feature',
+        'geometry': {
+            'type': 'Point',
+            'coordinates': [place.lng, place.lat]
+        },
+        'properties': {
+            'title': place.title,
+            'placeId': place.id,
+            'detailsUrl': reverse('place_view', kwargs={'place_id': place.id})
+        }
+    }
 
 
 def place_view(request, place_id):
