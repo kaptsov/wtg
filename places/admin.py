@@ -18,10 +18,10 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
     readonly_fields = ['image_preview', ]
 
     def image_preview(self, obj):
-        headshot_height = 200
-        return format_html('<img src="{url}" height={height} />'.format(
+        image_height = 200
+        return format_html('<img src="{url}" height={height} />',
                            url=obj.img_file.url,
-                           height=headshot_height)
+                           height=image_height,
                            )
 
 
