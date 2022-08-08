@@ -6,6 +6,7 @@ from .models import Place
 
 
 def index(request):
+
     place_features = [serialize_place(place) for place in Place.objects.all()]
 
     places_geodata = {
@@ -47,6 +48,5 @@ def place_view(request, place_id):
     }
     return JsonResponse(
         data=serialized_place,
-        safe=False,
         json_dumps_params={'ensure_ascii': False}
     )

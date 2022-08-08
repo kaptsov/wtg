@@ -9,7 +9,7 @@ from places.models import Place, Image
 
 class Command(BaseCommand):
     """
-    command: python manage.py load_place <link_to_json_file>
+    command: python manage.py load_place <link_to_file>
     Команда для заполнения данными локации на карте.
     Принимает аргументом ссылку на json-файл с описанием локации или файл со списком таких ссылок.
     Если объекта нет в базе данных, он будет создан.
@@ -34,7 +34,7 @@ class Command(BaseCommand):
                     'lat': location_data['coordinates']['lat'],
                     'description_long': location_data['description_long'],
                     'description_short': location_data['description_short'],
-                    'title': location_data['title']}
+                }
             )
             if created:
                 for img in location_data['imgs']:
@@ -57,7 +57,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         source = str(kwargs['source'])
         if os.path.isfile(source):
-            with open(source, 'r') as file:
+            with open(source, 'r', encoding='utf-8') as file:
                 list_of_links = file.readlines()
             for link in list_of_links:
                 self.fill_data_from_link(link)

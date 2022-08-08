@@ -37,6 +37,16 @@
    pip install -r requirements.txt
    ```
 
+Создать и заполнить файл .env
+SECRET_KEY='secret_key_secret_key_secret_key'
+DEBUG=True
+ALLOWED_HOSTS='127.0.0.1'
+CSRF_COOKIE_SECURE=True
+SESSION_COOKIE_SECURE=True
+MEDIA_ROOT=media
+STATIC_ROOT=static
+
+
 Запустить миграции:
 
 ```
