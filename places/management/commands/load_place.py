@@ -23,22 +23,22 @@ class Command(BaseCommand):
 
     def fill_data_from_link(self, link):
         response = requests.get(link.strip())
-        if not response.ok:
-            self.stdout.write(self.style.ERROR(f'Server returned an error: {response.status_code}'))
-            response.raise_for_status()
-        else:
-            location_data = response.json()
-            if 'error' in location_data:
-                raise requests.exceptions.HTTPError(location_data['error'])
-            location, created = Place.objects.get_or_create(
-                title=location_data['title'],
-                defaults={
-                    'lng': location_data['coordinates']['lng'],
-                    'lat': location_data['coordinates']['lat'],
-                    'description_long': location_data['description_long'],
-                    'description_short': location_data['description_short'],
-                }
-            )
+        response.raise_for_status()
+        location_data = response.json()
+
+        if 'error' in location_data:
+            raise requests.exceptions.HTTPError(location_data['error'])
+
+        location, created = Place.objects.get_or_create(
+            title=location_data['title'],
+            defaults={
+                'lng': location_data['coordinates']['lng'],
+                'lat': location_data['coordinates']['lat'],
+                'description_long': location_data['description_long'],
+                'description_short': location_data['description_short'],
+            }
+        )
+
         if not created:
             self.stdout.write(self.style.WARNING(f'Location {location.title} already exists, defaults updated.'))
         else:
