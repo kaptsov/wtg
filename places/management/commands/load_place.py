@@ -66,7 +66,7 @@ class Command(BaseCommand):
                                              f'Created Location object: {location.title} \n'))
 
     def handle(self, *args, **kwargs):
-        source = str(kwargs['source'])
+        source = kwargs['source']
         if os.path.isfile(source):
             with open(source, 'r', encoding='utf-8') as file:
                 list_of_links = file.readlines()
