@@ -23,13 +23,13 @@ def get_create_location(location_data):
 def upload_pics(location_data, location):
     for img in location_data['imgs']:
         img_file = ContentFile(requests.get(img).content)
-    filename = img.split('/')[-1]
-    loc_img, created = Image.objects.get_or_create(
-        place_id=location.id,
-        img_file=filename
-    )
-    if created:
-        loc_img.img_file.save(filename, img_file, save=True)
+        filename = img.split('/')[-1]
+        loc_img, created = Image.objects.get_or_create(
+            place_id=location.id,
+            img_file=filename
+        )
+        if created:
+            loc_img.img_file.save(filename, img_file, save=True)
 
 
 class Command(BaseCommand):
