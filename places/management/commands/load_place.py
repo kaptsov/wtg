@@ -1,4 +1,5 @@
 import os
+from urllib.parse import urlsplit
 
 import requests
 from django.core.files.base import ContentFile
@@ -21,9 +22,9 @@ def get_create_location(location_data):
 
 
 def upload_pics(location_data, location):
-    for img in location_data['imgs']:
-        img_file = ContentFile(requests.get(img).content)
-        filename = img.split('/')[-1]
+    for img_url in location_data['imgs']:
+        img_file = ContentFile(requests.get(img_url).content)
+        filename = urlsplit(img_url).path.split("/")[-1]
         loc_img, created = Image.objects.get_or_create(
             place_id=location.id,
             img_file=filename
