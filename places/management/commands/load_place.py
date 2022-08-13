@@ -1,29 +1,21 @@
 import os
-from urllib.parse import urlsplit, unquote
+from hashlib import md5
 
 import requests
-from io import BytesIO
-from django.core.files.images import ImageFile
+from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
 
 from places.models import Place, Image
 
 
 def upload_pics(location_data, location):
-    for img_url in location_data['imgs']:
+    for position, img_url in enumerate(location_data['imgs']):
 
-        filename = urlsplit(unquote(img_url)).path.split("/")[-1]
         response = requests.get(img_url)
         response.raise_for_status()
 
-        img_file = ImageFile(BytesIO(response.content))
-
-        location_image, created = Image.objects.get_or_create(
-            place_id=location.id,
-            img_file=filename
-        )
-        if created:
-            location_image.img_file.save(filename, img_file, save=True)
+        cf = ContentFile(response.content, name=md5(response.content).hexdigest())
+        Image.objects.create(place_id=location.id, img_file=cf, index=position)
 
 
 class Command(BaseCommand):
