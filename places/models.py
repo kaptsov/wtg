@@ -7,7 +7,6 @@ class Place(models.Model):
     title = models.TextField(max_length=200,
                              help_text='Не более 200 символов',
                              verbose_name='Название',
-                             blank=True,
                              unique=True
                              )
     description_short = models.TextField(verbose_name='Короткое описание',
