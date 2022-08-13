@@ -2,7 +2,8 @@ import os
 from urllib.parse import urlsplit
 
 import requests
-from django.core.files.base import ContentFile
+from io import BytesIO
+from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand
 
 from places.models import Place, Image
@@ -10,8 +11,13 @@ from places.models import Place, Image
 
 def upload_pics(location_data, location):
     for img_url in location_data['imgs']:
-        img_file = ContentFile(requests.get(img_url).content)
+
         filename = urlsplit(img_url).path.split("/")[-1]
+        response = requests.get(img_url)
+        response.raise_for_status()
+
+        img_file = ImageFile(BytesIO(response.content))
+
         loc_img, created = Image.objects.get_or_create(
             place_id=location.id,
             img_file=filename
